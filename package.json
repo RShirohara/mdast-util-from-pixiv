@@ -62,5 +62,9 @@
       "<rootDir>/src",
       "<rootDir>/tests"
     ]
+  },
+  "dependencies": {
+    "@types/mdast": "^3.0.10",
+    "pixiv-novel-parser": "^0.3.0"
   }
 }
