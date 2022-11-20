@@ -2,12 +2,12 @@
  * pixiv-novel-parser type definitions.
  */
 
-export enum NodeTypes {
+enum NodeTypes {
   Text = "text",
   Tag = "tag"
 }
 
-export enum TagNames {
+enum TagNames {
   NewPage = "newpage",
   Ruby = "rb",
   Chapter = "chapter",
