@@ -16,8 +16,8 @@ enum TagNames {
 
 declare module "pixiv-novel-parser" {
   export class Parser<T extends Node> {
-    tree: T[];
     static parse<T extends Node>(novel: string): T[];
+    tree: T[];
     parse(novel: string): Parser;
   }
 
