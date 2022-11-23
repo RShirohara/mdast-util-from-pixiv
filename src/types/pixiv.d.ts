@@ -48,7 +48,7 @@ declare module "pixiv-novel-parser" {
   export interface PixivImage extends Tag {
     name: "pixivimage";
     illustID: string;
-    pageNumber: string?;
+    pageNumber: number?;
   }
 
   export interface JumpPage extends Tag {
@@ -57,8 +57,8 @@ declare module "pixiv-novel-parser" {
   }
 
   export interface JumpUrl extends Tag {
-    name: "jumpurl";
+    name: "jumpuri";
     title: (Text | Ruby)[];
-    url: string;
+    uri: string;
   }
 }
