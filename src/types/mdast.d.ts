@@ -8,7 +8,7 @@ declare module "mdast" {
     ruby: string;
   }
 
-  export interface StaticPhrasingContentMap {
+  interface StaticPhrasingContentMap {
     ruby: Ruby;
   }
 }

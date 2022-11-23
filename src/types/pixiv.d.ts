@@ -42,7 +42,7 @@ declare module "pixiv-novel-parser" {
 
   export interface Chapter extends Tag {
     name: "chapter";
-    title: string;
+    title: (Text | Ruby)[];
   }
 
   export interface PixivImage extends Tag {
@@ -58,7 +58,7 @@ declare module "pixiv-novel-parser" {
 
   export interface JumpUrl extends Tag {
     name: "jumpurl";
-    title: string;
+    title: (Text | Ruby)[];
     url: string;
   }
 }
