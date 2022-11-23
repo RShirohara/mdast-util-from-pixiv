@@ -1,68 +1,63 @@
 // Type definition for npm module "pixiv-novel-parser".
 
-enum NodeTypes {
-  Text = "text",
-  Tag = "tag"
-}
-
-enum TagNames {
-  NewPage = "newpage",
-  Ruby = "rb",
-  Chapter = "chapter",
-  PixivImage = "pixivimage",
-  JumpPage = "jump",
-  JumpUrl = "jumpurl"
-}
-
 declare module "pixiv-novel-parser" {
-  export class Parser<T extends Node> {
-    static parse<T extends Node>(novel: string): T[];
+  export class Parser<T extends PixivNode> {
+    static parse<T extends PixivNode>(novel: string): T[];
     tree: T[];
     parse(novel: string): Parser;
   }
 
-  export interface Node {
-    type: NodeTypes;
+  export type PixivNode = Text | PixivTag;
+  export type PixivTag =
+    | NewPage
+    | Ruby
+    | Chapter
+    | PixivImage
+    | JumpPage
+    | JumpUrl;
+
+  interface Node {
+    type: string;
+  }
+
+  interface Tag extends Node {
+    type: "tag";
+    name: string;
   }
 
   export interface Text extends Node {
-    type: NodeTypes.Text;
+    type: "text";
     val: string;
   }
 
-  export interface Tag extends Node {
-    type: NodeTypes.Tag;
-    name: TagNames;
-  }
-
   export interface NewPage extends Tag {
-    name: TagNames.NewPage;
+    name: "newpage";
   }
 
   export interface Ruby extends Tag {
-    name: TagNames.Ruby;
+    name: "rb";
     rubyBase: string;
     rubyText: string;
   }
 
   export interface Chapter extends Tag {
-    name: TagNames.Chapter;
+    name: "chapter";
     title: string;
   }
 
   export interface PixivImage extends Tag {
-    name: TagNames.PixivImage;
+    name: "pixivimage";
     illustID: string;
-    pageNumber: string | null;
+    pageNumber: string?;
   }
 
   export interface JumpPage extends Tag {
-    name: TagNames.JumpPage;
+    name: "jump";
     pageNumber: number;
   }
 
   export interface JumpUrl extends Tag {
-    name: TagNames.JumpUrl;
+    name: "jumpurl";
     title: string;
     url: string;
   }
