@@ -50,7 +50,7 @@ describe("FlowContent", () => {
               val: "[pixiv]"
             }
           ],
-          uri: "http://www.pixiv.net/"
+          uri: "https://www.pixiv.net/"
         }
       ];
       const expectedAst: Content[] = [
@@ -465,7 +465,7 @@ describe("PhrasingContent", () => {
               val: "[pixiv]"
             }
           ],
-          uri: "http://www.pixiv.net/"
+          uri: "https://www.pixiv.net/"
         }
       ];
       const expectedAst: Content[] = [
