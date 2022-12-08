@@ -59,7 +59,7 @@ describe("FlowContent", () => {
           children: [
             {
               type: "link",
-              url: "https://www.pixiv.net/artworks/000001",
+              url: "https://www.pixiv.net/artworks/000001#2",
               children: [{ type: "text", value: "000001" }]
             },
             {
@@ -129,7 +129,7 @@ describe("FlowContent", () => {
       const pixivAst: PixivNode[] = [
         {
           type: "text",
-          val: "\n一つ目の段落\n二行目の行\n三行目の行\n\n二つ目の段落\n二行目の行\n\n\n三つ目の段落\n二つ目の行\n\n"
+          val: "\n一つ目の段落\n二行目の行\n三行目の行\n\n二つ目の段落\n二行目の行\n\n\n三つ目の段落\n二行目の行\n\n"
         }
       ];
       const expectedAst: Content[] = [
@@ -239,7 +239,7 @@ describe("FlowContent", () => {
 
     test("前後の改行を取り除く", () => {
       const pixivAst: PixivNode[] = [
-        { type: "text", val: "初投稿です。/n" },
+        { type: "text", val: "初投稿です。\n" },
         {
           type: "tag",
           name: "chapter",
@@ -250,7 +250,7 @@ describe("FlowContent", () => {
             }
           ]
         },
-        { type: "text", val: "/n/n読まないでください。" }
+        { type: "text", val: "\n\n読まないでください。" }
       ];
       const expectedAst: Content[] = [
         {
@@ -348,7 +348,7 @@ describe("PhrasingContent", () => {
 
     test("改行は含まれない", () => {
       const pixivAst: PixivNode[] = [
-        { type: "text", val: "ひとつめのテキスト/nふたつめのテキスト" }
+        { type: "text", val: "ひとつめのテキスト\nふたつめのテキスト" }
       ];
       const expectedAst: Content[] = [
         {
