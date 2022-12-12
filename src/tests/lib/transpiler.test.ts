@@ -1,7 +1,7 @@
 import { Content } from "mdast";
 import { PixivNode } from "pixiv-novel-parser";
 
-import { transpile } from "../transpiler";
+import { transpile } from "../../lib/transpiler";
 
 describe("FlowContent", () => {
   describe("Paragraph", () => {
