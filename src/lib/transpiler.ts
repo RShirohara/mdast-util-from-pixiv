@@ -1,5 +1,6 @@
 import {
   BlockContent,
+  Break,
   Heading,
   Link,
   Paragraph,
@@ -19,41 +20,15 @@ import {
   Text as PixivText
 } from "pixiv-novel-parser";
 
-type PixivFlowContent = PixivChapter | PixivNewPage | PixivPhrasingContent[];
-type PixivPhrasingContent =
-  | PixivImage
-  | PixivJumpPage
-  | PixivJumpUrl
-  | PixivStaticPhrasingContent;
-type PixivStaticPhrasingContent = PixivText | PixivRuby;
+import {
+  buildPixivNodeTree,
+  PixivFlowContent,
+  PixivPhrasingContent,
+  PixivStaticPhrasingContent
+} from "./pixivNodeProcessor";
 
 export function transpile<T extends PixivNode>(nodes: T[]): BlockContent[] {
   return buildPixivNodeTree([...nodes]).map(convertFlowContent);
-}
-
-function buildPixivNodeTree<T extends PixivNode>(
-  nodes: T[]
-): PixivFlowContent[] {
-  const result: PixivFlowContent[] = [];
-  let innerNodes: PixivPhrasingContent[] = [];
-  for (const node of nodes) {
-    if (
-      node.type === "tag" &&
-      (node.name === "chapter" || node.name === "newpage")
-    ) {
-      if (innerNodes.length >= 1) {
-        result.push(innerNodes);
-      }
-      innerNodes = [];
-      result.push(node);
-    } else {
-      innerNodes.push(node);
-    }
-  }
-  if (innerNodes.length >= 1) {
-    result.push(innerNodes);
-  }
-  return result;
 }
 
 function convertFlowContent<T extends PixivFlowContent>(node: T): BlockContent {
@@ -86,6 +61,9 @@ function convertStaticPhrasingContent<T extends PixivStaticPhrasingContent>(
   switch (node.type) {
     case "text": {
       return convertText(node);
+    }
+    case "break": {
+      return convertBreak();
     }
     case "tag": {
       switch (node.name) {
@@ -121,6 +99,11 @@ function convertNewpage(node: PixivNewPage): Heading {
 function convertText(node: PixivText): Text {
   return { type: "text", value: node.val };
 }
+
+function convertBreak(): Break {
+  return { type: "break" };
+}
+
 function convertRuby(node: PixivRuby): Ruby {
   return { type: "ruby", value: node.rubyBase, ruby: node.rubyText };
 }
