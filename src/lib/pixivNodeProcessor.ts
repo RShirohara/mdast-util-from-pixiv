@@ -34,6 +34,7 @@ export function buildPixivNodeTree<T extends PixivNode>(
     _data: PixivPhrasingContent[];
     apply: () => void;
     push: (node: PixivPhrasingContent) => void;
+    length: () => number;
   } = {
     _data: [],
     apply() {
@@ -44,6 +45,9 @@ export function buildPixivNodeTree<T extends PixivNode>(
     },
     push(node) {
       this._data.push(node);
+    },
+    length() {
+      return this._data.length;
     }
   };
   [...nodes].map(convertLineBreaks).forEach((node) => {
@@ -58,7 +62,7 @@ export function buildPixivNodeTree<T extends PixivNode>(
       node.forEach((iNode) => {
         if (iNode.type === "hardbreak") {
           inlineNode.apply();
-        } else {
+        } else if (!(iNode.type === "break" && inlineNode.length() === 0)) {
           inlineNode.push(iNode);
         }
       });
@@ -77,7 +81,7 @@ function convertLineBreaks<T extends PixivNode>(
     return node;
   }
   return node.val
-    .replaceAll(/^\n+|\n$/gu, "")
+    .replaceAll(/^\n+|\n+$/gu, "")
     .replaceAll("\n\n", "\0HardBreak\0")
     .replaceAll("\n", "\0Break\0")
     .split("\0")
